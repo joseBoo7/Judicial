@@ -46,7 +46,7 @@ function funcion_reporte() {
 						t2 = parseFloat(data[i].tiempo2);
 					}
 					//
-					const con = new String("<tr><th>" + (i + 1) + "</th><td>" + data[i].fecha + "</td><td>" + data[i].nombre + "</td><td>" + funcion_nombre_estado(data[i].estado) + "</td><td>" + t1.toFixed(0) + "</td><td>" + t2.toFixed(0) + "</td><td>" + (t1 + t2).toFixed(0) + "</td></tr>");
+					const con = new String("<tr><th>" + (i + 1) + "</th><td>" + data[i].fecha + "</td><td>" + data[i].nombre + "</td><td>" + funcion_nombre_estado(data[i].estado) + "</td><td>" + secondsFormat(t1.toFixed(0)) + "</td><td>" + secondsFormat(t2.toFixed(0)) + "</td><td>" + secondsFormat((t1 + t2).toFixed(0)) + "</td></tr>");
 					dato = dato + con;
 
 				}
@@ -73,6 +73,15 @@ function funcion_reporte() {
 			}
 		}
 	});
+}
+
+//Funcion para mostrar hora formateada
+function secondsFormat( s ) { 
+    var day = Math.floor (s / (24 * 3600)); // Math.floor () redondea hacia abajo 
+    var hour = Math.floor( (s - day*24*3600) / 3600); 
+    var minute = Math.floor( (s - day*24*3600 - hour*3600) /60 ); 
+    var second = s - day*24*3600 - hour*3600 - minute*60; 
+    return minute + "' " + second + "''"; 
 }
 
 function funcion_reporte_usuario() {
