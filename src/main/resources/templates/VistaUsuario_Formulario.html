@@ -1,0 +1,75 @@
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/Estilo_VistaSede_Formulario.css">
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!--Funciones-->
+	<script type="text/javascript" th:src="@{/js/Funcion_Usuario.js}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulario Usuario</title>
+</head>
+
+<body>
+	<div class="wrapper fadeInDown">
+
+		<div id="formContent">
+			<h3>Usuario</h3>
+			<!-- SedeF Form -->
+			<form th:action="@{/usuario/guardar}" th:object=${usuario} method="POST">
+				<input id="id_usuario" th:field="*{n_id_usuario}" type="hidden">
+				<input id="estado_usuario" th:field="*{s_estado_usuario}" type="hidden">
+				<h4>DNI:</h4>
+				<input id="dni_usuario" type="text" maxlength="8" style="width: 77%;" class="fadeIn second" th:field="*{s_dni_usuario}"
+					placeholder="Ingrese dni" onkeypress="return valideKey(event);" required />
+				<a href="#" th:onclick="funcion_reniec()"> <img src="../icons/fingerprint-scan.png" alt="dd"></a>
+
+				<h4>Usuario:</h4>
+				<input id="usuario_usuario" type="text" class="fadeIn second" th:field="*{s_usuario_usuario}"
+					placeholder="Ingrese usuario" required />
+				<h4>Clave:</h4>
+				<input id="clave_usuario" type="password" class="fadeIn second" th:field="*{s_contrasena_usuario}"
+					placeholder="Ingrese clave" required />
+				<h4>Nombres:</h4>
+				<input id="nombre_usuario" type="text" class="fadeIn second" th:field="*{s_nombre_usuario}"
+					placeholder="Ingrese nombres del usuario" required />
+				<h4>Apellidos:</h4>
+				<input id="apellido_usuario" type="text" class="fadeIn second" th:field="*{s_apellidos_usuario}"
+					placeholder="Ingrese apellidos del usuario" required />
+				<h4>Sede:</h4>
+				<select id="sede_usuario" th:field="*{Sede_n_id_sede}" type="select" class="form-select-lg"
+					aria-label="Default select example">
+					<option value="0">-- SELECCIONAR SEDE --</option>
+					<div th:each="sede:${sedes}">
+						<option th:if="${sede.n_id_sede} == *{Sede_n_id_sede.getN_id_sede()}"
+							th:value="${sede.n_id_sede}" th:text="${sede.s_nombre_sede}" selected />
+						<option th:unless="${sede.n_id_sede} == *{Sede_n_id_sede.getN_id_sede()}"
+							th:value="${sede.n_id_sede}" th:text="${sede.s_nombre_sede}" />
+					</div>
+				</select>
+				<h4>Rol:</h4>
+				<select id="rol_usuario" th:field="*{Rol_n_id_rol}" type="select" class="form-select-lg"
+					aria-label="Default select example">
+					<option value="0">-- SELECCIONAR ROL --</option>
+					<div th:each="rol:${roles}">
+						<option th:if="${rol.n_id_rol} == *{Rol_n_id_rol.getN_id_rol()}" th:value="${rol.n_id_rol}"
+							th:text="${rol.s_nombre_rol}" selected />
+						<option th:unless="${rol.n_id_rol} == *{Rol_n_id_rol.getN_id_rol()}" th:value="${rol.n_id_rol}"
+							th:text="${rol.s_nombre_rol}" />
+					</div>
+				</select>
+				<!--<button type="submit" class="fadeIn fourth">Registrar</button>-->
+				<button th:onclick="funcion_EditarUsuario()" type="button"
+					class="buttonRed fadeIn fourth">Registrar</button>
+				<a href="/usuario"><button type="button" class="buttonRed fadeIn fourth">Cancelar</button></a>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

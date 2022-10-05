@@ -1,0 +1,50 @@
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/Estilo_VistaSede_Formulario.css">
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!--Funciones-->
+	<script type="text/javascript" th:src="@{/js/Funcion_Especialidad.js}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulario Especialidad</title>
+</head>
+
+<body>
+	<div class="wrapper fadeInDown">
+
+		<div id="formContent">
+			<h3>Especialidad</h3>
+			<!-- SedeF Form -->
+			<form th:action="@{/especialidad/guardar}" th:object=${especialidad} method="POST">
+				<input id="id_especialidad" th:field="*{n_id_especialidad}" type="hidden">
+				<input id="estado_especialidad" th:field="*{s_estado_especialidad}" type="hidden">
+				<h4>Nombre:</h4>
+				<input id="nombre_especialidad" type="text" class="fadeIn second" th:field="*{s_nombre_especialidad}"
+					placeholder="Ingrese nombre de la especialidad" required />
+				<h4>Sede:</h4>
+				<select id="sede_especialidad" th:field="*{Sede_n_id_sede}" type="select" class="form-select-lg"
+					aria-label="Default select example">
+					<option value="0">-- SELECCIONAR SEDE --</option>
+					<div th:each="sede:${sedes}">
+						<option th:if="${sede.n_id_sede} == *{Sede_n_id_sede.getN_id_sede()}"
+							th:value="${sede.n_id_sede}" th:text="${sede.s_nombre_sede}" selected />
+						<option th:unless="${sede.n_id_sede} == *{Sede_n_id_sede.getN_id_sede()}"
+							th:value="${sede.n_id_sede}" th:text="${sede.s_nombre_sede}" />
+					</div>
+				</select>
+				<!--<button type="submit" class="fadeIn fourth">Registrar</button>-->
+				<button th:onclick="funcion_EditarEspecialidad()" type="button"
+					class="buttonRed fadeIn fourth">Registrar</button>
+				<a href="/especialidad"><button type="button" class="buttonRed fadeIn fourth">Cancelar</button></a>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

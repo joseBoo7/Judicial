@@ -1,0 +1,83 @@
+
+/* --------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------- */
+/*                           Estilos de la Ventanilla                                            */
+/* --------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(/icons/logo-poder.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+
+.hero {
+  color: rgb(0, 0, 0);
+  display: grid;
+  grid-template-rows: max-content 1fr;
+  grid-template-areas:
+    "nav"
+    "content";
+  min-height: 100vh;
+}
+
+.nav {
+  grid-area: nav;
+  display: grid;
+  justify-content: space-between;
+  grid-auto-flow: column;
+  gap: 1em;
+  align-items: center;
+  height: 90px;
+  float: left;
+
+}
+
+.nav__list {
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1em;
+}
+
+.hero__main {
+  grid-area: content;
+  display: grid;
+  gap: 15%;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: 180px;
+  align-items: center;
+}
+
+.info2 {
+  padding: 15px;
+}
+
+.container-fluid {
+  background-color: #ffffff;
+  height: 95%;
+}
+
+.hero__waves {
+  grid-area: content;
+  align-self: end;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------- */

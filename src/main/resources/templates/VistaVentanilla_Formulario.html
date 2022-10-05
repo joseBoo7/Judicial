@@ -1,0 +1,60 @@
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/Estilo_VistaSede_Formulario.css">
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!--Funciones-->
+	<script type="text/javascript" th:src="@{/js/Funcion_Ventanilla.js}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulario Ventanilla</title>
+</head>
+
+<body>
+	<div class="wrapper fadeInDown">
+
+		<div id="formContent">
+			<h3>Ventanilla</h3>
+			<!-- SedeF Form -->
+			<form th:action="@{/ventanilla/guardar}" th:object=${ventanilla} method="POST">
+				<input id="id_ventanilla" th:field="*{n_id_ventanilla}" type="hidden">
+				<input id="estado_ventanilla" th:field="*{s_estado_ventanilla}" type="hidden">
+				<h4>Sede:</h4>
+				<select id="sede_ventanilla" th:field="*{Sede_n_id_sede}" type="select" class="form-select-lg"
+					aria-label="Default select example">
+					<option value="0">-- SELECCIONAR SEDE --</option>
+					<div th:each="sede:${sedes}">
+						<option th:if="${sede.n_id_sede} == *{Sede_n_id_sede.getN_id_sede()}"
+							th:value="${sede.n_id_sede}" th:text="${sede.s_nombre_sede}" selected />
+						<option th:unless="${sede.n_id_sede} == *{Sede_n_id_sede.getN_id_sede()}"
+							th:value="${sede.n_id_sede}" th:text="${sede.s_nombre_sede}" />
+					</div>
+				</select>
+				<h4>Número:</h4>
+				<input id="numero_ventanilla" type="number" class="fadeIn second" th:field="*{n_numero_ventanilla}"
+					placeholder="Ingrese el número" required />
+				<h4>Preferencial:</h4>
+				<div class="form-check" id="select">
+					<input th:if="${ventanilla.getS_preferencial_ventanilla()} == 'I'" class="text form-check-input"
+						type="checkbox" id="preferencial_ventanilla" value="">
+					<input th:if="${ventanilla.getS_preferencial_ventanilla()} == 'A'" class="text form-check-input"
+						type="checkbox" id="preferencial_ventanilla" value="" checked>
+					<label class="form-check-label" for="exampleRadios1">
+						VENTANILLA PREFERENCIAL
+					</label>
+				</div>
+				<!--<button type="submit" class="fadeIn fourth">Registrar</button>-->
+				<button th:onclick="funcion_EditarVentanilla()" type="button"
+					class="buttonRed fadeIn fourth">Registrar</button>
+				<a href="/ventanilla"><button type="button" class="buttonRed fadeIn fourth">Cancelar</button></a>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

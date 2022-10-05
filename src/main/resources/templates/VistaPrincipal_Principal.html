@@ -1,0 +1,118 @@
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/Estilo_VistaPrincipal_Ventanilla.css">
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!--Funciones-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" th:src="@{/js/Funcion_Principal_Principal.js}"></script>
+	<title>Principal</title>
+</head>
+
+<body>
+	<header class="hero">
+		<input id="idSede_usuario" th:value="${idSede}" type="hidden">
+		<nav class="nav container">
+
+		</nav>
+		<section class="hero__main container">
+			<!-- --------------------------------------------------------  -->
+			<!--                  Ventana de informacion                   -->
+			<!-- --------------------------------------------------------  -->
+			<div class="hero__texts" id="anuncio">
+				<div class="container-fluid shadow-lg p-3 mb-6 bg-white rounded text-center">
+					<br>
+					<h3 style="color: #919191;">VENTANILLA</h3>
+					<div class="info2">
+						<h3>Bienvenido</h3>
+						<h4>Sede:</h4>
+						<h5 th:text="${sede}"></h5>
+						<h4>Ventanilla:</h4>
+						<h5 th:text="'VENTANILLA '+${ventanilla}"></h5>
+						<h4>Usuario: </h4>
+						<h5 th:text="${nombre}"></h5>
+					</div>
+					<a href="/logout"><button class="btn btn-danger btn-block">Cerrar Sesion</button></a>
+				</div>
+			</div>
+			<!-- --------------------------------------------------------  -->
+			<!--                  Card View                                -->
+			<!-- --------------------------------------------------------  -->
+
+			<div class="hero__picture container">
+				<div class="card carta text-center  shadow-lg ">
+					<div class="card-header" style="color: #919191;">
+						<h5>Ventanilla</h5>
+					</div>
+					<div class="card-body ">
+						<div id="data"></div>
+						<p class="card-text"></p>
+						<div id="llamar">
+							<button th:onclick="funcion_otorgarAtencion([[${idVentanilla}]])"
+								class="btn btn-success btn-block mb-2 w-100">Llamar</button>
+						</div>
+						<div class="row">
+							<div id="fin" class="col">
+								<button th:onclick="funcion_atender_fin()"
+									class="btn btn-primary btn-block mb-2 w-100 h-100">Finalizar
+									atención</button>
+							</div>
+							<div id="siguiente" class="col">
+								<button th:onclick="funcion_atender()"
+									class="btn btn-danger btn-block mb-2 w-100 h-100">Ausente</button>
+							</div>
+						</div>
+						<div id="llamarAyuda">
+							<button class="btn btn-outline-info mb-2 w-100" data-bs-toggle="modal"
+								data-bs-target="#miModal">Llamar de
+								otra especialidad</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</header>
+
+	<!-- --------------------------------------------------------  -->
+	<!-- Ventana Modal  -->
+	<!-- --------------------------------------------------------  -->
+	<div class="modal fade" id="miModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header d-flex justify-content-center">
+					<h5 class="modal-title" style="color: #bbbbbb;">Especialidad</h5>
+				</div>
+				<div class="modal-body">
+					<select class="form-select" id="especialidad" aria-label="Default select example" type="select">
+						<option value="0">-- SELECCIONAR ESPECIALIDAD --</option>
+						<div th:each="especialidad:${especialidades}">
+							<option th:value="${especialidad.n_id_especialidad}"
+								th:text="${especialidad.s_nombre_especialidad}" />
+
+						</div>
+					</select>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button th:onclick="funcion_ayudar([[${idVentanilla}]])" type="button" class="btn btn-success"
+						data-bs-dismiss="modal">Aceptar</button>
+					<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- --------------------------------------------------------  -->
+	<!-- JavaScript Bundle with Popper -->
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" th:src="@{/js/Funcion_Inicio_Ventanilla.js}"></script>
+</body>
+
+</html>

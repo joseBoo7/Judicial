@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/Estilo_VistaPrincipal.css">
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" th:src="@{/js/Funcion_Principal.js}"></script>
+	<title>Login</title>
+</head>
+
+<body>
+	<div class="wrapper ">
+
+		<div id="formContent" class="fadeInDown">
+			<!-- Icon -->
+			<div class="fadeIn first">
+				<img src="../icons/user.jpg" id="icon" alt="User Icon" />
+			</div>
+			<!-- Login Form -->
+			<form th:action="@{/login}" method="post">
+
+				<div th:if=${param.error}>
+					<div class="alert alert-danger">Usuario o contraseña
+						inválidos</div>
+				</div>
+
+				<div th:if=${param.logout}>
+					<div class="alert alert-info">Ha cerrado sesión exitosamente
+					</div>
+				</div>
+				<h4>Usuario</h4>
+				<input type="text" id="username" name="username" class="fadeIn second" onkeyup="mayusculas(this);">
+				<h4>Contraseña</h4>
+				<input id="password" type="password" name="password" class="fadeIn third" onkeyup="mayusculas(this);">
+
+
+
+				<button type="submit" class="fadeIn fourth">Ingresar</button>
+				
+
+			</form>
+
+
+		</div>
+	</div>
+</body>
+
+</html>

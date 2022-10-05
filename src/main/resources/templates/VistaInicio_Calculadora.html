@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Touch Pad</title>
+	<link rel="stylesheet" href="/css/Estilo_VistaInicio_Calculadora.css">
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!--Funciones-->
+	<script type="text/javascript" th:src="@{/js/Funcion_Inicio_Calculadora.js}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div id="btn_logout">
+		<button th:onclick="funcion_atras()" style="border: none;"><img src="/icons/x-circle.svg" alt="logout"></button>
+
+	</div>
+	<div class="container">
+		<div class="display" id="result">
+			<div class="display2" id="output">
+				<!--<p class="result-box ip" id="output-value"> </p>-->
+				<input autofocus th:onkeypress="funcion_EnviarDni_Enter(event,[[${especialidad}]])"
+					class="result-box ip" id="output-value" type="text" maxlength="8" />
+			</div>
+		</div>
+		<div class="buttons" id="keyboard">
+			<div class="row">
+				<button class="botonesR number" type="submit" id="7">7</button>
+				<button class="botonesR number" type="submit" id="8">8</button>
+				<button class="botonesR number" type="submit" id="9">9</button>
+			</div>
+			<div class="row">
+				<button class="botonesR number" type="submit" id="4">4</button>
+				<button class="botonesR number" type="submit" id="5">5</button>
+				<button class="botonesR number" type="submit" id="6">6</button>
+			</div>
+			<div class="row">
+				<button class="botonesR number" type="submit" id="1">1</button>
+				<button class="botonesR number" type="submit" id="2">2</button>
+				<button class="botonesR number" type="submit" id="3">3</button>
+			</div>
+			<div class="row">
+				<button class="botonesRZ number" type="submit" id="0">0</button>
+				<button class="botonesR operator" type="submit" id="backspace">X</button>
+
+			</div>
+		</div>
+		<div class="right" id="keyboard">
+			<div>
+				<button th:onclick="funcion_EnviarDni([[${especialidad}]])" class="btnRightA send" type="submit2"
+					id="btnAceptar">
+					ACEPTAR
+				</button>
+			</div>
+			<div>
+				<button class="btnRightA operator" type="submit3" id="clear">
+					BORRAR TODO </button>
+			</div>
+			<div>
+				<a th:onclick="funcion_sinDni([[${especialidad}]])"><button class="btnRightA" type="submit4"
+						id="btnSinDNI">
+						SIN DNI
+					</button></a>
+			</div>
+
+
+
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/js/Funcion_Inicio.js}"></script>
+</body>
+
+</html>

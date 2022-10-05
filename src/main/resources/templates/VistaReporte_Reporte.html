@@ -1,0 +1,251 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/Estilo_VistaReporte.css">
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<title>Version 2 Reportes</title>
+</head>
+
+<body>
+
+	<div class="container-flex cont__head">
+		<form>
+			<div class="container text-center ">
+				<h5>
+					Reportes
+
+				</h5>
+			</div>
+			<div class="container px-4 py-2 text-center">
+				<div class="row gx-5">
+					<div class="col">
+						<h5>Fecha de Inicio </h5>
+						<input type="date" class="form-control" id="date_1">
+					</div>
+					<div class="col">
+						<h5>Fecha Fin </h5>
+						<input type="date" class="form-control" id="date_2">
+					</div>
+					<div class="col">
+						<h5>Sede </h5>
+						<select id="sede" onchange="funcion_especialidad()" class="form-select gx-5"
+							aria-label="Default select example">
+							<option value="0">-- SELECCIONAR SEDE --</option>
+							<div th:each="sede:${sedes}">
+								<option th:value="${sede.n_id_sede}" th:text="${sede.s_nombre_sede}" />
+							</div>
+						</select>
+					</div>
+					<div class="col">
+						<h5>Especialidad </h5>
+						<div id="especialidades"></div>
+					</div>
+
+				</div>
+				<div class="row gx-5 py-4">
+					<div class="col">
+						<button id="iniciarReporte" onclick="funcion_reporte()" type="button"
+							class="btn btn-success">Aceptar</button>
+						<a href="/principal"><button type="button" class="btn btn-danger">Regresar</button></a>
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="container-flex cont__bod">
+		<div class="container mt-3">
+			<div id="tabla" style="display:none">
+				<table  class="table table-bordered">
+					<thead class="text-center">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Fecha</th>
+							<th scope="col">Usuario ventanillero</th>
+							<th scope="col">Estado</th>
+							<th scope="col">T1(seg)</th>
+							<th scope="col">T2(seg)</th>
+							<th scope="col">T3(seg)</th>
+						</tr>
+					</thead>
+					<tbody id="dataReport" class="text-center">
+
+					</tbody>
+
+				</table>
+			</div>
+			<!--<div class="row gx-5">
+                <div class="col">
+                    <h4>Subfiltro Usuarios</h3>
+                        <select class="form-select gx-5" aria-label="Default select example">
+                            <option selected disabled>Seleccionar Sede</option>
+                            <option value="1">Sede 1</option>
+                            <option value="2">Sede 2</option>
+                            <option value="3">Sede 3</option>
+                        </select>
+                </div>
+                <div class="col">
+                    <h4>Subfiltro Sede</h3>
+                        <select class="form-select gx-5" aria-label="Default select example">
+                            <option selected disabled>Seleccionar Sede</option>
+                            <option value="1">Sede 1</option>
+                            <option value="2">Sede 2</option>
+                            <option value="3">Sede 3</option>
+                        </select>
+                </div>
+                <div class="col">
+                    <h4>Subfiltro Especialidad</h3>
+                        <select class="form-select gx-5" aria-label="Default select example">
+                            <option selected disabled>Seleccionar Sede</option>
+                            <option value="1">Sede 1</option>
+                            <option value="2">Sede 2</option>
+                            <option value="3">Sede 3</option>
+                        </select>
+                </div>
+            </div>-->
+			<div class="row py-5">
+				<div class="container">
+
+
+					<div id="graficoBar" style="height: 550px; margin-bottom: 40px;">
+					</div>
+					<!--<div id="graficoDisperso" style="height: 550px; margin-bottom: 98px;">
+                    </div>-->
+                    <div id="myChart2" style="height: 550px; margin-bottom: 40px;">
+					</div>
+					<div id="graficoCircular" style="height: 550px; margin-bottom: 40px;">
+					</div>
+					<br>
+					<div id="myChart" style="height: 550px;">
+					</div>
+
+					<!--
+
+                    <div id="graficoDisperso" style="height: 550px; margin-bottom: 98px;">
+                    </div>
+
+                    <div id="graficoCrossLines" style="height: 550px; margin-bottom: 98px;">
+                    </div>
+
+                    <div id="graficoHistograma" style="height: 550px; margin-bottom: 98px;">
+                    </div>
+
+                    <div id="graficoGap" style="height: 550px; margin-bottom: 98px;">
+                    </div>-->
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<!-- Ventana Modal Ver Detalle -->
+
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+
+
+            <div class="modal-content ">
+                <div class="modal-header d-flex justify-content-center ">
+                    <h5 class="modal-title" style="color: #bbbbbb;">Detalle Usuario</h5>
+                </div>
+                <div class="modal-body" >
+                    <div class="col-12" style="overflow: scroll;">
+                        <table class="table table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col">Usuario </th>
+                                    <th scope="col">Nombre </th>
+                                    <th scope="col">Especialidad </th>
+                                    <th scope="col">N. Ventanilla</th>
+                                    <th scope="col">Hora Ingreso</th>
+                                    <th scope="col">Hora Atencion</th>
+                                    <th scope="col">Hora Salida</th>
+                                    <th scope="col">Total</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td>L.Cas</td>
+                                    <td>Lucas</td>
+                                    <td>Laboral</td>
+                                    <td>1</td>
+                                    <td>8:00am</td>
+                                    <td>8:30am</td>
+                                    <td>6:00pm</td>    
+                                    <td>190</td>
+                       
+                                </tr>
+                                <tr>
+                                    <td>L.Cas</td>
+                                    <td>Lucas </td>
+                                    <td>Penal 2</td>
+                                    <td>4</td>
+                                    <td>8:00am</td>
+                                    <td>8:30am</td>
+                                    <td>6:00pm</td>
+                                    <td>90</td>
+
+                                </tr>
+                                <tr>
+                                    <td>L.Cas</td>
+                                    <td>Lucas</td>
+                                    <td>Civil</td>
+                                    <td>3</td>
+                                    <td>8:00am</td>
+                                    <td>8:30am</td>
+                                    <td>6:00pm</td>
+                                    <td>290</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-success  ">Descargar</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+	
+	<!--FUNCIONS GRAFICOS REPORTE-->
+	<script src="https://unpkg.com/ag-charts-community@6.1.0/dist/ag-charts-community.min.js"></script>
+
+	<script th:src="@{/js/graficos/Lineal/data.js}"></script>
+	<script th:src="@{/js/graficos/Lineal/main.js}"></script>
+
+	<script th:src="@{/js/graficos/Bar/dataBar.js}"></script>
+	<script th:src="@{/js/graficos/Bar/mainBar.js}"></script>
+
+
+	<script th:src="@{/js/graficos/Circular/dataCircular.js}"></script>
+	<script th:src="@{/js/graficos/Circular/mainCircular.js}"></script>
+
+	<script th:src="@{/js/graficos/Disperso/dataDisp.js}"></script>
+	<script th:src="@{/js/graficos/Disperso/mainDisp.js}"></script>
+
+	<script th:src="@{/js/graficos/Crosslines/dataInter.js}"></script>
+	<script th:src="@{/js/graficos/Crosslines/mainInter.js}"></script>
+
+	<script th:src="@{/js/graficos/Histograma/dataHisto.js}"></script>
+	<script th:src="@{/js/graficos/Histograma/mainHisto.js}"></script>
+
+	<script th:src="@{/js/graficos/LineGaps/dataGaps.js}"></script>
+	<script th:src="@{/js/graficos/LineGaps/mainGaps.js}"></script>
+	
+	<script th:src="@{/js/graficos/Input/input.js}"></script>
+	<script type="text/javascript" th:src="@{/js/Funcion_Reporte.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/Estilo_VistaSede_Formulario.css">
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!--Funciones-->
+	<script type="text/javascript" th:src="@{/js/Funcion_Sede.js}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulario Sedes</title>
+</head>
+
+<body>
+	<div class="wrapper fadeInDown">
+
+		<div id="formContent">
+			<h3>Sede</h3>
+			<!-- SedeF Form -->
+			<form th:action="@{/sede/guardar}" th:object=${sede} method="POST">
+				<input id="id_sede" th:field="*{n_id_sede}" type="hidden">
+				<input id="estado_sede" th:field="*{s_estado_sede}" type="hidden">
+				<h4>Nombre:</h4>
+				<input id="nombre_sede" type="text" class="fadeIn second" th:field="*{s_nombre_sede}"
+					placeholder="Ingrese nombre de la sede" required />
+				<h4>Ubicación:</h4>
+				<input id="ubicacion_sede" type="text" class="fadeIn second" th:field="*{s_ubicacion_sede}"
+					placeholder="Ingrese la direccion de la sede" required />
+				<!--<button type="submit" class="fadeIn fourth">Registrar</button>-->
+				<button th:onclick="funcion_EditarSede()" type="button"
+					class="buttonRed fadeIn fourth">Registrar</button>
+				<a href="/sede"><button type="button" class="buttonRed fadeIn fourth">Cancelar</button></a>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

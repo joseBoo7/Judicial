@@ -1,0 +1,39 @@
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/Estilo_VistaPrincipal_SedeVentanilla.css">
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!--Funciones-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" th:src="@{/js/Funcion_Inicio.js}"></script>
+	<title>Inicio</title>
+</head>
+
+<body>
+	<div class="wrapper">
+
+		<div id="formContent" class="fadeInDown">
+
+			<h4>Bienvenido</h4>
+			<h3 th:text="'Seleccionar sede:'"></h3>
+			<select id="sede_inicio" class="tproll">
+				<option value="0" selected>-- SELECCIONAR SEDE --</option>
+				<div th:each="sede:${sedes}">
+					<option th:value="${sede.n_id_sede}" th:text="${sede.s_nombre_sede}" />
+				</div>
+			</select>
+			<br>
+			<button th:onclick="funcion_EnviarSede()" type="button" class="fadeIn fourth">Aceptar</button>
+			<a href="/inicio"><button type="submit" class="fadeIn fourth">Cancelar</button></a>
+			
+			</div>
+		</div>
+</body>
+
+</html>

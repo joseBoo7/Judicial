@@ -1,0 +1,85 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/Estilo_VistaInicio_Tv.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!-- CSS only -->
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" th:src="@{/js/Funcion_Inicio_Tv.js}"></script>
+	<title>Tv Interfaz</title>
+</head>
+
+<body>
+	<!---->
+
+	<!---->
+	<!--<select id="sede_inicio" class="tproll">
+		<div th:each="sede:${videos}">
+			<option th:value="${sede.n_id_video}" th:text="${sede.s_enlace_video}" />
+		</div>
+	</select>-->
+	<div>
+
+		<iframe class="container-flex" style="height: 63%; width: 75%;"
+			src="https://www.youtube.com/embed/videoseries?list=PLMvpdbG6R8PGHo7K7KpI1tz2aH1ZEPQ6P"
+			title="YouTube video player" frameborder="0"
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+			allowfullscreen></iframe>
+
+		<div class="container-flex  wait__sec">
+			<div class="container">
+				<div class="">
+					<div class="">
+						<div class="sub__titlle">
+							<h4>En espera</h4>
+
+
+						</div>
+						<div id="dataReservacion">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- Grillas -->
+	<div class="container-fluid">
+		<div class="col" id="data">
+			<!--
+            <div class="row">
+                <div class="sec_1 col border border-secondar">
+                    <h5> FC14 - 5</h5>
+                </div>
+                <div class="sec_2 col border border-secondar">
+                    <h5> FC14 - 5</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="sec_1 col border border-secondar">
+                    <h5> FC14 - 5</h5>
+                </div>
+                <div class="sec_2 col border border-secondar">
+                    <h5> FC14 - 5</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="sec_1 col border border-secondar">
+                    <h5> FC14 - 5</h5>
+                </div>
+                <div class="sec_2 col border border-secondar">
+                    <h5> FC14 - 5</h5>
+                </div>
+            </div>
+            -->
+		</div>
+</body>
+
+</html>

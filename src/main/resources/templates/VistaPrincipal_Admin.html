@@ -1,0 +1,71 @@
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/Estilo_VistaPrincipal_Admin.css">
+	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.css">
+	<script src="/webjars/sweetalert2/11.1.2/dist/sweetalert2.min.js"></script>
+	<!--Funciones-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Principal</title>
+</head>
+
+<body>
+	<!-- ***************************************** -->
+
+	<div class="sidebar fadeInDown">
+		<header>Administrador</header>
+		<ul>
+			<li>
+				<a href="/usuario"><button type="submit">Usuario</button></a>
+			</li>
+			<li>
+				<a href="/sede"><button type="submit">Sede</button></a>
+			</li>
+			<li>
+				<a href="/especialidad"><button type="submit">Especialidad</button></a>
+			</li>
+			<li>
+				<a href="/ventanilla"><button type="submit">Ventanilla</button></a>
+			</li>
+			<li>
+				<a href="/rol"><button type="submit">Rol</button></a>
+			</li>
+			<li>
+				<a href="/video"><button type="submit">Video</button></a>
+			</li>
+			<li>
+				<a href="/reporte"><button type="submit">Reporte</button></a>
+			</li>
+		</ul>
+		<div>
+			<a href="/logout"><button class="btn_ext submit">Salir</Button></a>
+		</div>
+
+
+
+	</div>
+
+
+
+	<section>
+		<div class="contenido2 fadeIn first">
+			<div id="formContent">
+				<h3>Bienvenido</h3>
+				<h4>Usuario: </h4>
+				<h5 th:text="${nombre}"></h5>
+
+			</div>
+
+		</div>
+
+
+	</section>
+</body>
+
+
+</html>
