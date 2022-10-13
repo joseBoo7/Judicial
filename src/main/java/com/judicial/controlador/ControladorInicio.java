@@ -8,13 +8,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-/*import javax.print.Doc;
+import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
-import java.util.ArrayList;*/
+
 import javax.print.PrintException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,17 +185,17 @@ public class ControladorInicio {
 																										// numeroVentanilla
 				+ "\n" + " \n\n\n\n\n\n\n\n\n\n";
 
-		/*
-		 * PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
-		 * 
-		 * DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE; DocPrintJob docPrintJob =
-		 * printService.createPrintJob(); Doc doc = new SimpleDoc(texto.getBytes(),
-		 * flavor, null);
-		 * 
-		 * docPrintJob.print(doc, null);
-		 */
+		
+		 PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+		 
+		 DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE; DocPrintJob docPrintJob =
+		 printService.createPrintJob(); Doc doc = new SimpleDoc(texto.getBytes(),
+		 flavor, null);
+		 
+		 docPrintJob.print(doc, null);
+		 
 
-		System.out.println(texto);
+		//System.out.println(texto);
 
 	}
 
