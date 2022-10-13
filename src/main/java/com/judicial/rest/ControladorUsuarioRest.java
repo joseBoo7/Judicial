@@ -15,6 +15,7 @@ import com.judicial.dto.DtoCampo;
 import com.judicial.dto.DtoCampoPromedio;
 import com.judicial.dto.DtoGrafico_Lineal;
 import com.judicial.dto.DtoReporte_Atencion;
+import com.judicial.dto.DtoReporte_Modal;
 import com.judicial.dto.PersonaReniec;
 import com.judicial.dto.Reporte;
 import com.judicial.interfacesServicio.InterfazAtencionServicio;
@@ -89,5 +90,10 @@ public class ControladorUsuarioRest {
 	@PostMapping("/reporte/promedio")
 	public List<DtoCampoPromedio> listarReportePromedio(@RequestBody Reporte r) {
 		return servicioAtencion.reporteAtencionPromedioUsuario(r.getF1(), r.getF2(), r.getSede());
+	}
+
+	@PostMapping("/reporte/modal")
+	public List<DtoReporte_Modal> listarReporteModal(@RequestBody Reporte r) {
+		return servicioAtencion.reporteAtencionDataModal(r.getF1(), r.getF2(), r.getSede());
 	}
 }

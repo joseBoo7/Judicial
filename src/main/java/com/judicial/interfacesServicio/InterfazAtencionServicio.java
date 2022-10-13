@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.judicial.dto.DtoCampo;
 import com.judicial.dto.DtoCampoPromedio;
 import com.judicial.dto.DtoReporte_Atencion;
+import com.judicial.dto.DtoReporte_Modal;
 import com.judicial.modelo.Atencion;
 import com.judicial.modelo.Ventanilla;
 
@@ -36,4 +37,6 @@ public interface InterfazAtencionServicio {
 	public List<DtoCampo> reporteAtencionPorVentanilla(String fecha1, String fecha2, int id);
 	
 	public List<DtoCampoPromedio> reporteAtencionPromedioUsuario(String fecha1, String fecha2, int id);
+	
+	public List<DtoReporte_Modal> reporteAtencionDataModal(String fecha, String ausente, int id);
 }

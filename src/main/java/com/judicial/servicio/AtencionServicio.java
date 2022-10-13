@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.judicial.dto.DtoCampo;
 import com.judicial.dto.DtoCampoPromedio;
 import com.judicial.dto.DtoReporte_Atencion;
+import com.judicial.dto.DtoReporte_Modal;
 import com.judicial.interfaces.InterfazAtencion;
 import com.judicial.interfacesServicio.InterfazAtencionServicio;
 import com.judicial.interfacesServicio.InterfazEspecialidadServicio;
@@ -103,6 +104,11 @@ public class AtencionServicio implements InterfazAtencionServicio {
 	@Override
 	public List<DtoCampoPromedio> reporteAtencionPromedioUsuario(String fecha1, String fecha2, int id) {
 		return dato.reportAtencionPromedioUsuario(fecha1, fecha2, servicioSede.listarId(id).get());
+	}
+
+	@Override
+	public List<DtoReporte_Modal> reporteAtencionDataModal(String fecha, String ausente, int id) {
+		return dato.reportDataModal(fecha, ausente, servicioSede.listarId(id).get());
 	}
 
 }

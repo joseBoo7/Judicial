@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/css/Estilo_VistaReporte.css">
 	<script src="/webjars/jquery/jquery.min.js"></script>
 	<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 	<title>Version 2 Reportes</title>
 </head>
 
@@ -61,7 +62,7 @@
 	<div class="container-flex cont__bod">
 		<div class="container mt-3">
 			<div id="tabla" style="display:none">
-				<table  class="table table-bordered">
+				<table class="table table-bordered">
 					<thead class="text-center">
 						<tr>
 							<th scope="col">#</th>
@@ -71,6 +72,7 @@
 							<th scope="col">Registro</th>
 							<th scope="col">Llamado</th>
 							<th scope="col">Finalizado</th>
+							<th scope="col">Información</th>
 						</tr>
 					</thead>
 					<tbody id="dataReport" class="text-center">
@@ -79,35 +81,6 @@
 
 				</table>
 			</div>
-			<!--<div class="row gx-5">
-                <div class="col">
-                    <h4>Subfiltro Usuarios</h3>
-                        <select class="form-select gx-5" aria-label="Default select example">
-                            <option selected disabled>Seleccionar Sede</option>
-                            <option value="1">Sede 1</option>
-                            <option value="2">Sede 2</option>
-                            <option value="3">Sede 3</option>
-                        </select>
-                </div>
-                <div class="col">
-                    <h4>Subfiltro Sede</h3>
-                        <select class="form-select gx-5" aria-label="Default select example">
-                            <option selected disabled>Seleccionar Sede</option>
-                            <option value="1">Sede 1</option>
-                            <option value="2">Sede 2</option>
-                            <option value="3">Sede 3</option>
-                        </select>
-                </div>
-                <div class="col">
-                    <h4>Subfiltro Especialidad</h3>
-                        <select class="form-select gx-5" aria-label="Default select example">
-                            <option selected disabled>Seleccionar Sede</option>
-                            <option value="1">Sede 1</option>
-                            <option value="2">Sede 2</option>
-                            <option value="3">Sede 3</option>
-                        </select>
-                </div>
-            </div>-->
 			<div class="row py-5">
 				<div class="container">
 
@@ -116,7 +89,7 @@
 					</div>
 					<!--<div id="graficoDisperso" style="height: 550px; margin-bottom: 98px;">
                     </div>-->
-                    <div id="myChart2" style="height: 550px; margin-bottom: 40px;">
+					<div id="myChart2" style="height: 550px; margin-bottom: 40px;">
 					</div>
 					<div id="graficoCircular" style="height: 550px; margin-bottom: 40px;">
 					</div>
@@ -142,83 +115,50 @@
 		</div>
 
 	</div>
-	
+
 	<!-- Ventana Modal Ver Detalle -->
 
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+	<div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
 
 
-            <div class="modal-content ">
-                <div class="modal-header d-flex justify-content-center ">
-                    <h5 class="modal-title" style="color: #bbbbbb;">Detalle Usuario</h5>
-                </div>
-                <div class="modal-body" >
-                    <div class="col-12" style="overflow: scroll;">
-                        <table class="table table-bordered">
-                            <thead class="text-center">
-                                <tr>
-                                    <th scope="col">Usuario </th>
-                                    <th scope="col">Nombre </th>
-                                    <th scope="col">Especialidad </th>
-                                    <th scope="col">N. Ventanilla</th>
-                                    <th scope="col">Hora Ingreso</th>
-                                    <th scope="col">Hora Atencion</th>
-                                    <th scope="col">Hora Salida</th>
-                                    <th scope="col">Total</th>
+			<div class="modal-content ">
+				<div class="modal-header d-flex justify-content-center ">
+					<h5 class="modal-title" style="color: #bbbbbb;">Detalle Atención</h5>
+				</div>
+				<div class="modal-body">
+					<div class="col-12" style="overflow: scroll;">
+						<div id="tablaModal" style="display:none">
+							<table class="table table-bordered">
+								<thead class="text-center">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Atendio</th>
+										<th scope="col">Ventanilla</th>
+										<th scope="col">Registro</th>
+										<th scope="col">Llamado</th>
+										<th scope="col">Finalizado</th>
+									</tr>
+								</thead>
+								<tbody id="dataModal" class="text-center">
 
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <tr>
-                                    <td>L.Cas</td>
-                                    <td>Lucas</td>
-                                    <td>Laboral</td>
-                                    <td>1</td>
-                                    <td>8:00am</td>
-                                    <td>8:30am</td>
-                                    <td>6:00pm</td>    
-                                    <td>190</td>
-                       
-                                </tr>
-                                <tr>
-                                    <td>L.Cas</td>
-                                    <td>Lucas </td>
-                                    <td>Penal 2</td>
-                                    <td>4</td>
-                                    <td>8:00am</td>
-                                    <td>8:30am</td>
-                                    <td>6:00pm</td>
-                                    <td>90</td>
+								</tbody>
 
-                                </tr>
-                                <tr>
-                                    <td>L.Cas</td>
-                                    <td>Lucas</td>
-                                    <td>Civil</td>
-                                    <td>3</td>
-                                    <td>8:00am</td>
-                                    <td>8:30am</td>
-                                    <td>6:00pm</td>
-                                    <td>290</td>
+							</table>
+						</div>
+					</div>
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn btn-success  ">Descargar</button>
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                </div>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+				</div>
 
 
 
-            </div>
-        </div>
-    </div>
-	
+			</div>
+		</div>
+	</div>
+
 	<!--FUNCIONS GRAFICOS REPORTE-->
 	<script src="https://unpkg.com/ag-charts-community@6.1.0/dist/ag-charts-community.min.js"></script>
 
@@ -243,7 +183,7 @@
 
 	<script th:src="@{/js/graficos/LineGaps/dataGaps.js}"></script>
 	<script th:src="@{/js/graficos/LineGaps/mainGaps.js}"></script>
-	
+
 	<script th:src="@{/js/graficos/Input/input.js}"></script>
 	<script type="text/javascript" th:src="@{/js/Funcion_Reporte.js}"></script>
 </body>
