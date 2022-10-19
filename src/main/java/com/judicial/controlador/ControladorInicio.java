@@ -145,11 +145,11 @@ public class ControladorInicio {
 			}
 		}
 		// Registrar Atencion
-		registrarAtencion(idCliente, sede, idEspecialidad, preferencial);
+		registrarAtencion(idCliente, sede, idEspecialidad, preferencial, dni);
 		return "redirect:/inicio";
 	}
 
-	public void registrarAtencion(int idCliente, int idSede, int idEspecialidad, int preferencial)
+	public void registrarAtencion(int idCliente, int idSede, int idEspecialidad, int preferencial, int dni)
 			throws ParseException, PrintException {
 		// Realizar reservacion
 		Reservacion reservacion = new Reservacion();
@@ -162,36 +162,39 @@ public class ControladorInicio {
 		// Relacionar especialidad a la reservacion
 		if (preferencial != 1)
 			registrarEspecialidadReservacion(idReservacion, idEspecialidad);
-		// Imprimir
-		String nombreSede = "";
-		String codigoCliente = "";
-		String fechaAtencion = "";
-		String horaAtencion = "";
-		// String numeroVentanilla = "";
-		nombreSede = servicioSede.listarId(idSede).get().getS_nombre_sede();
-		Cliente temp = servicioCliente.listarId(idCliente).get();
-		codigoCliente = temp.getS_codigo_letra_cliente() + temp.getN_codigo_cliente();
-		DateFormat dateFormatFecha = new SimpleDateFormat("dd/MM/yyyy");
-		dateFormatFecha.setTimeZone(TimeZone.getTimeZone("GMT"));
-		fechaAtencion = dateFormatFecha.format(reservacion.getD_fecha_hora_reservacion());
-		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-		horaAtencion = dateFormat.format(reservacion.getD_fecha_hora_reservacion());
-		// numeroVentanilla = ventanilla.getN_numero_ventanilla() + "";
-		String texto = "\tP J\n" + "\tC.S.J. AREQUIPA\n\n" + "\tSede: " + nombreSede + "\n" + "\tCodigo: "
-				+ codigoCliente + "\n" + "\tFecha: " + fechaAtencion + "\n" + "\tHora: " + horaAtencion // + "\n" +
-																										// "Ventanilla:
-																										// " +
-																										// numeroVentanilla
-				+ "\n" + " \n\n\n\n\n\n\n\n\n\n";
+		// Imprimir solo si no se envia el dni
+		if (dni == 0) {
+			// Imprimir
+			String nombreSede = "";
+			String codigoCliente = "";
+			String fechaAtencion = "";
+			String horaAtencion = "";
+			// String numeroVentanilla = "";
+			nombreSede = servicioSede.listarId(idSede).get().getS_nombre_sede();
+			Cliente temp = servicioCliente.listarId(idCliente).get();
+			codigoCliente = temp.getS_codigo_letra_cliente() + temp.getN_codigo_cliente();
+			DateFormat dateFormatFecha = new SimpleDateFormat("dd/MM/yyyy");
+			dateFormatFecha.setTimeZone(TimeZone.getTimeZone("GMT"));
+			fechaAtencion = dateFormatFecha.format(reservacion.getD_fecha_hora_reservacion());
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+			dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+			horaAtencion = dateFormat.format(reservacion.getD_fecha_hora_reservacion());
+			// numeroVentanilla = ventanilla.getN_numero_ventanilla() + "";
+			String texto = "\tP J\n" + "\tC.S.J. AREQUIPA\n\n" + "\tSede: " + nombreSede + "\n" + "\tCodigo: "
+					+ codigoCliente + "\n" + "\tFecha: " + fechaAtencion + "\n" + "\tHora: " + horaAtencion // + "\n" +
+																											// "Ventanilla:
+																											// " +
+																											// numeroVentanilla
+					+ "\n" + " \n\n\n\n\n\n\n\n\n\n";
 
-		PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+			PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
 
-		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-		DocPrintJob docPrintJob = printService.createPrintJob();
-		Doc doc = new SimpleDoc(texto.getBytes(), flavor, null);
+			DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+			DocPrintJob docPrintJob = printService.createPrintJob();
+			Doc doc = new SimpleDoc(texto.getBytes(), flavor, null);
 
-		docPrintJob.print(doc, null);
+			docPrintJob.print(doc, null);
+		}
 
 		// System.out.println(texto);
 
