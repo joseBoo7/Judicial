@@ -14,6 +14,7 @@ import com.judicial.dto.DtoReporte_Modal;
 import com.judicial.modelo.Atencion;
 import com.judicial.modelo.Especialidad;
 import com.judicial.modelo.Sede;
+import com.judicial.modelo.Usuario;
 import com.judicial.modelo.Ventanilla;
 
 @Repository
@@ -33,7 +34,7 @@ public interface InterfazAtencion extends JpaRepository<Atencion, Integer> {
 			+ "AND a.s_estado_atencion = 'P' " + "ORDER BY a.d_fecha_atencion")
 	public List<Atencion> findBySede(@Param(value = "Sede") Sede Sede);
 
-	@Query(value = "SELECT d.s_nombre_usuario AS nombre, a.s_ausente_atencion AS estado, CAST(a.d_fecha_atencion AS date) AS fecha, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_atencion,b.d_fecha_hora_reservacion))) AS tiempo1, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,a.d_fecha_atencion))) AS tiempo2, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,b.d_fecha_hora_reservacion))) AS tiempo3 FROM Atencion a "
+	@Query(value = "SELECT d.n_id_usuario AS codigo, d.s_nombre_usuario AS nombre, a.s_ausente_atencion AS estado, CAST(a.d_fecha_atencion AS date) AS fecha, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_atencion,b.d_fecha_hora_reservacion))) AS tiempo1, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,a.d_fecha_atencion))) AS tiempo2, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,b.d_fecha_hora_reservacion))) AS tiempo3 FROM Atencion a "
 			+ "INNER JOIN Reservacion b " + "ON a.Reservacion_n_id_reservacion = b.n_id_reservacion "
 			+ "INNER JOIN Ventanilla c " + "ON a.Ventanilla_n_id_ventanilla = c.n_id_ventanilla "
 			+ "INNER JOIN Usuario d " + "ON a.Usuario_n_id_usuario = d.n_id_usuario " + "INNER JOIN Cliente e "
@@ -47,7 +48,7 @@ public interface InterfazAtencion extends JpaRepository<Atencion, Integer> {
 			@Param(value = "fecha2") String fecha2, @Param(value = "sede") Sede sede,
 			@Param(value = "especialidad") Especialidad especialidad);
 
-	@Query(value = "SELECT d.s_nombre_usuario AS nombre, a.s_ausente_atencion AS estado, CAST(a.d_fecha_atencion AS date) AS fecha, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_atencion,b.d_fecha_hora_reservacion))) AS tiempo1, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,a.d_fecha_atencion))) AS tiempo2, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,b.d_fecha_hora_reservacion))) AS tiempo3 FROM Atencion a "
+	@Query(value = "SELECT d.n_id_usuario AS codigo, d.s_nombre_usuario AS nombre, a.s_ausente_atencion AS estado, CAST(a.d_fecha_atencion AS date) AS fecha, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_atencion,b.d_fecha_hora_reservacion))) AS tiempo1, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,a.d_fecha_atencion))) AS tiempo2, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,b.d_fecha_hora_reservacion))) AS tiempo3 FROM Atencion a "
 			+ "INNER JOIN Reservacion b " + "ON a.Reservacion_n_id_reservacion = b.n_id_reservacion "
 			+ "INNER JOIN Ventanilla c " + "ON a.Ventanilla_n_id_ventanilla = c.n_id_ventanilla "
 			+ "INNER JOIN Usuario d " + "ON a.Usuario_n_id_usuario = d.n_id_usuario " + "INNER JOIN Cliente e "
@@ -59,7 +60,7 @@ public interface InterfazAtencion extends JpaRepository<Atencion, Integer> {
 	public List<DtoReporte_Atencion> reportAtencionPreferencial(@Param(value = "fecha1") String fecha1,
 			@Param(value = "fecha2") String fecha2, @Param(value = "sede") Sede sede);
 
-	@Query(value = "SELECT d.s_nombre_usuario AS nombre, a.s_ausente_atencion AS estado, CAST(a.d_fecha_atencion AS date) AS fecha, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_atencion,b.d_fecha_hora_reservacion))) AS tiempo1, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,a.d_fecha_atencion))) AS tiempo2, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,b.d_fecha_hora_reservacion))) AS tiempo3 FROM Atencion a "
+	@Query(value = "SELECT d.n_id_usuario AS codigo, d.s_nombre_usuario AS nombre, a.s_ausente_atencion AS estado, CAST(a.d_fecha_atencion AS date) AS fecha, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_atencion,b.d_fecha_hora_reservacion))) AS tiempo1, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,a.d_fecha_atencion))) AS tiempo2, AVG(TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,b.d_fecha_hora_reservacion))) AS tiempo3 FROM Atencion a "
 			+ "INNER JOIN Reservacion b " + "ON a.Reservacion_n_id_reservacion = b.n_id_reservacion "
 			+ "INNER JOIN Ventanilla c " + "ON a.Ventanilla_n_id_ventanilla = c.n_id_ventanilla "
 			+ "INNER JOIN Usuario d " + "ON a.Usuario_n_id_usuario = d.n_id_usuario " + "INNER JOIN Cliente e "
@@ -103,13 +104,15 @@ public interface InterfazAtencion extends JpaRepository<Atencion, Integer> {
 	public List<DtoCampoPromedio> reportAtencionPromedioUsuario(@Param(value = "fecha1") String fecha1,
 			@Param(value = "fecha2") String fecha2, @Param(value = "sede") Sede sede);
 
-	@Query(value = "SELECT d.s_usuario_usuario AS nombre, c.n_numero_ventanilla AS ventanilla, CAST(a.d_fecha_atencion AS date) AS fecha, TIME_TO_SEC(TIMEDIFF(a.d_fecha_atencion,b.d_fecha_hora_reservacion)) AS tiempo1, TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,a.d_fecha_atencion)) AS tiempo2, TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,b.d_fecha_hora_reservacion)) AS tiempo3 FROM Atencion a "
+	@Query(value = "SELECT d.s_nombre_usuario AS nombre, c.n_numero_ventanilla AS ventanilla, CAST(a.d_fecha_atencion AS date) AS fecha, TIME_TO_SEC(TIMEDIFF(a.d_fecha_atencion,b.d_fecha_hora_reservacion)) AS tiempo1, TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,a.d_fecha_atencion)) AS tiempo2, TIME_TO_SEC(TIMEDIFF(a.d_fecha_fin_atencion,b.d_fecha_hora_reservacion)) AS tiempo3 FROM Atencion a "
 			+ "INNER JOIN Reservacion b " + "ON a.Reservacion_n_id_reservacion = b.n_id_reservacion "
 			+ "INNER JOIN Ventanilla c " + "ON a.Ventanilla_n_id_ventanilla = c.n_id_ventanilla "
 			+ "INNER JOIN Usuario d " + "ON a.Usuario_n_id_usuario = d.n_id_usuario "
 			+ "WHERE c.Sede_n_id_sede = :sede " + "AND a.s_ausente_atencion = :ausente "
+			+ "AND d.n_id_usuario = :usuario "
 			+ "AND CAST(b.d_fecha_hora_reservacion AS date) =  CAST(:fecha AS date) ")
 	public List<DtoReporte_Modal> reportDataModal(@Param(value = "fecha") String fecha,
-			@Param(value = "ausente") String ausente, @Param(value = "sede") Sede sede);
+			@Param(value = "ausente") String ausente, @Param(value = "sede") Sede sede,
+			@Param(value = "usuario") int usuario);
 
 }

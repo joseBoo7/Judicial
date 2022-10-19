@@ -185,17 +185,15 @@ public class ControladorInicio {
 																										// numeroVentanilla
 				+ "\n" + " \n\n\n\n\n\n\n\n\n\n";
 
-		
-		 PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
-		 
-		 DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE; DocPrintJob docPrintJob =
-		 printService.createPrintJob(); Doc doc = new SimpleDoc(texto.getBytes(),
-		 flavor, null);
-		 
-		 docPrintJob.print(doc, null);
-		 
+		PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
 
-		//System.out.println(texto);
+		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+		DocPrintJob docPrintJob = printService.createPrintJob();
+		Doc doc = new SimpleDoc(texto.getBytes(), flavor, null);
+
+		docPrintJob.print(doc, null);
+
+		// System.out.println(texto);
 
 	}
 
@@ -245,8 +243,14 @@ public class ControladorInicio {
 			@PathVariable int idEspecialidad, Model modelo) throws ParseException {
 		List<Reservacion> reservaciones = new ArrayList<Reservacion>();
 		Usuario usuario = servicioUsuario.encontrarUsuario(auth.getName()).get(0);
-		// Obtener lista de reservaciones de la especialidad solicitada
-		reservaciones = servicioReservacion.listarPorEspecialidad(idSede, idEspecialidad);
+		// Comprobar si se esta buscando ayuda de una ventanilla con preferencial
+		if (idEspecialidad == -1) {
+			// Obtener lista de reservaciones por reservacion preferencial
+			reservaciones = servicioReservacion.listarPreferencial(idSede);
+		} else {
+			// Obtener lista de reservaciones de la especialidad solicitada
+			reservaciones = servicioReservacion.listarPorEspecialidad(idSede, idEspecialidad);
+		}
 		// Verificar si hay reservaciones
 		if (reservaciones.size() != 0) {
 			// Crear atencion en base a la primera reservacion
@@ -274,21 +278,22 @@ public class ControladorInicio {
 		servicioAtencion.guardar(atencion);
 		return "VistaInicio_Especialidad";
 	}
-	
+
 	@GetMapping("/atender/fin/{idAtencion}")
-	public String atenderClienteFin(Authentication auth, @PathVariable int idAtencion, Model modelo) throws ParseException {
+	public String atenderClienteFin(Authentication auth, @PathVariable int idAtencion, Model modelo)
+			throws ParseException {
 		Atencion atencion = servicioAtencion.listarId(idAtencion).get();
 		atencion.setS_estado_atencion("I");
 		atencion.setS_asistir_atencion("I");
 		// Generar fecha y hora actual para finalizar atencion
 		String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-        SimpleDateFormat dateParser = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        dateParser.setTimeZone(TimeZone.getTimeZone("GMT"));
+		SimpleDateFormat dateParser = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		dateParser.setTimeZone(TimeZone.getTimeZone("GMT"));
 		atencion.setD_fecha_fin_atencion(dateParser.parse(timeStamp));
 		servicioAtencion.guardar(atencion);
 		return "VistaInicio_Especialidad";
 	}
-	
+
 	@GetMapping("/atender/sonido/{idAtencion}")
 	public String atenderClienteSonido(@PathVariable int idAtencion) {
 		Atencion atencion = servicioAtencion.listarId(idAtencion).get();

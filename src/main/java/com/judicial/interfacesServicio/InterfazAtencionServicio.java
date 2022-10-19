@@ -38,5 +38,5 @@ public interface InterfazAtencionServicio {
 	
 	public List<DtoCampoPromedio> reporteAtencionPromedioUsuario(String fecha1, String fecha2, int id);
 	
-	public List<DtoReporte_Modal> reporteAtencionDataModal(String fecha, String ausente, int id);
+	public List<DtoReporte_Modal> reporteAtencionDataModal(String fecha, String ausente, int id, int id2);
 }

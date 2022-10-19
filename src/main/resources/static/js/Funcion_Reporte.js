@@ -46,7 +46,7 @@ function funcion_reporte() {
 						t2 = parseFloat(data[i].tiempo2);
 					}
 					//
-					const con = new String("<tr><th>" + (i + 1) + "</th><td>" + data[i].fecha + "</td><td>" + data[i].nombre + "</td><td>" + funcion_nombre_estado(data[i].estado) + "</td><td>" + secondsFormat(t1.toFixed(0)) + "</td><td>" + secondsFormat(t2.toFixed(0)) + "</td><td>" + secondsFormat((t1 + t2).toFixed(0)) + "</td><td><button type='button'  onclick='funcion_reporte_modal(\"" + data[i].fecha+"\",\""+ data[i].estado + "\")' data-bs-toggle='modal' data-bs-target='#infoModal' ><img src='/icons/info.svg' alt='info' srcset=''></button></td></tr>");
+					const con = new String("<tr><th>" + (i + 1) + "</th><td>" + data[i].fecha + "</td><td>" + data[i].nombre + "</td><td>" + funcion_nombre_estado(data[i].estado) + "</td><td>" + secondsFormat(t1.toFixed(0)) + "</td><td>" + secondsFormat(t2.toFixed(0)) + "</td><td>" + secondsFormat((t1 + t2).toFixed(0)) + "</td><td><button type='button'  onclick='funcion_reporte_modal(\"" + data[i].fecha + "\",\"" + data[i].estado + "\",\"" + data[i].codigo + "\")' data-bs-toggle='modal' data-bs-target='#infoModal' ><img src='/icons/info.svg' alt='info' srcset=''></button></td></tr>");
 					dato = dato + con;
 
 				}
@@ -77,13 +77,14 @@ function funcion_reporte() {
 
 // Reporte Datos Modal
 
-function funcion_reporte_modal(fecha,ausente) {
+function funcion_reporte_modal(fecha, ausente, codigo) {
 	$.ajax({
 		data: JSON.stringify({
 			"f1": fecha,
 			"f2": ausente,
 			"sede": $("#sede").val(),
-			"especialidad": $("#especialidad").val()
+			"especialidad": $("#especialidad").val(),
+			"usuario": codigo
 		}),
 		type: 'POST',
 		dataType: "json",

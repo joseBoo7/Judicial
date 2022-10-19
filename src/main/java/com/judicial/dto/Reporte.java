@@ -12,13 +12,15 @@ public class Reporte implements Serializable {
 	private String f2;
 	private int sede;
 	private int especialidad;
+	private int usuario;
 
-	public Reporte(String f1, String f2, int sede, int especialidad) {
+	public Reporte(String f1, String f2, int sede, int especialidad, int usuario) {
 		super();
 		this.f1 = f1;
 		this.f2 = f2;
 		this.sede = sede;
 		this.especialidad = especialidad;
+		this.usuario = usuario;
 	}
 
 	public String getF1() {
@@ -51,6 +53,14 @@ public class Reporte implements Serializable {
 
 	public void setEspecialidad(int especialidad) {
 		this.especialidad = especialidad;
+	}
+
+	public int getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(int usuario) {
+		this.usuario = usuario;
 	}
 
 }

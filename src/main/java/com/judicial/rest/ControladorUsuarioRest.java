@@ -94,6 +94,6 @@ public class ControladorUsuarioRest {
 
 	@PostMapping("/reporte/modal")
 	public List<DtoReporte_Modal> listarReporteModal(@RequestBody Reporte r) {
-		return servicioAtencion.reporteAtencionDataModal(r.getF1(), r.getF2(), r.getSede());
+		return servicioAtencion.reporteAtencionDataModal(r.getF1(), r.getF2(), r.getSede(), r.getUsuario());
 	}
 }

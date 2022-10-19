@@ -93,6 +93,7 @@
 				<div class="modal-body">
 					<select class="form-select" id="especialidad" aria-label="Default select example" type="select">
 						<option value="0">-- SELECCIONAR ESPECIALIDAD --</option>
+						<option value="-1">PREFERENCIAL</option>
 						<div th:each="especialidad:${especialidades}">
 							<option th:value="${especialidad.n_id_especialidad}"
 								th:text="${especialidad.s_nombre_especialidad}" />

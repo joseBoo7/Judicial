@@ -15,6 +15,7 @@ import com.judicial.interfaces.InterfazAtencion;
 import com.judicial.interfacesServicio.InterfazAtencionServicio;
 import com.judicial.interfacesServicio.InterfazEspecialidadServicio;
 import com.judicial.interfacesServicio.InterfazSedeServicio;
+import com.judicial.interfacesServicio.InterfazUsuarioServicio;
 import com.judicial.modelo.Atencion;
 import com.judicial.modelo.Ventanilla;
 
@@ -28,6 +29,8 @@ public class AtencionServicio implements InterfazAtencionServicio {
 	private InterfazSedeServicio servicioSede;
 	@Autowired
 	private InterfazEspecialidadServicio servicioEspecialidad;
+	@Autowired
+	private InterfazUsuarioServicio servicioUsuario;
 
 	@Override
 	public List<Atencion> listar() {
@@ -107,8 +110,8 @@ public class AtencionServicio implements InterfazAtencionServicio {
 	}
 
 	@Override
-	public List<DtoReporte_Modal> reporteAtencionDataModal(String fecha, String ausente, int id) {
-		return dato.reportDataModal(fecha, ausente, servicioSede.listarId(id).get());
+	public List<DtoReporte_Modal> reporteAtencionDataModal(String fecha, String ausente, int id, int usuario) {
+		return dato.reportDataModal(fecha, ausente, servicioSede.listarId(id).get(), usuario);
 	}
 
 }

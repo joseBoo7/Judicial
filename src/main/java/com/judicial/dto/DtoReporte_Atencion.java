@@ -1,6 +1,8 @@
 package com.judicial.dto;
 
 public interface DtoReporte_Atencion {
+	
+	Integer getCodigo();
 
 	String getNombre();
 
