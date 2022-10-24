@@ -1,3 +1,29 @@
+var dataDetalle = [];
+
+function ExportData() {
+	var temporal = dataDetalle;
+	if (dataDetalle.length != 0) {
+		for (var i = 0; i < dataDetalle.length; i++) {
+			delete temporal[i].codigo;
+			temporal[i].tiempo1 = secondsFormat(parseFloat(temporal[i].tiempo1).toFixed(0));
+			if (temporal[i].tiempo2 == null)
+				temporal[i].tiempo2 = secondsFormat(0);
+			else
+				temporal[i].tiempo2 = secondsFormat(parseFloat(temporal[i].tiempo2).toFixed(0));
+			temporal[i].tiempo3 = secondsFormat(parseFloat(temporal[i].tiempo1 + temporal[i].tiempo2).toFixed(0));
+			if (temporal[i].estado == 'A')
+				temporal[i].estado = 'AUSENTE';
+			else
+				temporal[i].estado = 'FINALIZADO';
+		}
+		console.log(temporal);
+	}
+	filename = 'ReporteAtenciones.xlsx';
+	var ws = XLSX.utils.json_to_sheet(temporal);
+	var wb = XLSX.utils.book_new();
+	XLSX.utils.book_append_sheet(wb, ws, "Atenciones");
+	XLSX.writeFile(wb, filename);
+}
 
 function funcion_especialidad() {
 	$.ajax({
@@ -19,59 +45,91 @@ function funcion_especialidad() {
 }
 
 function funcion_reporte() {
-	$.ajax({
-		data: JSON.stringify({
-			"f1": $("#date_1").val(),
-			"f2": $("#date_2").val(),
-			"sede": $("#sede").val(),
-			"especialidad": $("#especialidad").val()
-		}),
-		type: 'POST',
-		dataType: "json",
-		contentType: 'application/json;charset=UTF-8',
-		url: "/api/reporte",
-		success: function(data) {
-			var tabla = document.getElementById("tabla");
-			if (data.length != 0) {
-				tabla.style.display = "block";
-				var dato = "";
+	if ($("#sede").val() == 0) {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: 'btn btn-success',
+				cancelButton: 'btn btn-danger'
+			},
+			buttonsStyling: false
+		})
+		swalWithBootstrapButtons.fire(
+			'Error',
+			'SELECCIONE SEDE',
+			'error'
+		)
+	} else {
+		$.ajax({
+			data: JSON.stringify({
+				"f1": $("#date_1").val(),
+				"f2": $("#date_2").val(),
+				"sede": $("#sede").val(),
+				"especialidad": $("#especialidad").val()
+			}),
+			type: 'POST',
+			dataType: "json",
+			contentType: 'application/json;charset=UTF-8',
+			url: "/api/reporte",
+			success: function(data) {
+				dataDetalle = data;
+				var tabla = document.getElementById("tabla");
+				var boton = document.getElementById("descargarReporte");
+				if (data.length != 0) {
+					tabla.style.display = "block";
+					boton.style.display = "block";
+					var dato = "";
 
-				for (var i = 0; i < data.length; i++) {
-					//Valores tiempo
-					var t1 = parseFloat(data[i].tiempo1);
-					var t2 = data[i].tiempo2;
-					if (t2 == null)
-						t2 = 0;
-					else {
-						t2 = parseFloat(data[i].tiempo2);
+					for (var i = 0; i < data.length; i++) {
+						//Valores tiempo
+						var t1 = parseFloat(data[i].tiempo1);
+						var t2 = data[i].tiempo2;
+						if (t2 == null)
+							t2 = 0;
+						else {
+							t2 = parseFloat(data[i].tiempo2);
+						}
+						//
+						const con = new String("<tr><th>" + (i + 1) + "</th><td>" + data[i].fecha + "</td><td>" + data[i].nombre + "</td><td>" + funcion_nombre_estado(data[i].estado) + "</td><td>" + secondsFormat(t1.toFixed(0)) + "</td><td>" + secondsFormat(t2.toFixed(0)) + "</td><td>" + secondsFormat((t1 + t2).toFixed(0)) + "</td><td><button type='button'  onclick='funcion_reporte_modal(\"" + data[i].fecha + "\",\"" + data[i].estado + "\",\"" + data[i].codigo + "\")' data-bs-toggle='modal' data-bs-target='#infoModal' ><img src='/icons/book-open.svg' alt='info' srcset=''></button></td></tr>");
+						dato = dato + con;
+
 					}
-					//
-					const con = new String("<tr><th>" + (i + 1) + "</th><td>" + data[i].fecha + "</td><td>" + data[i].nombre + "</td><td>" + funcion_nombre_estado(data[i].estado) + "</td><td>" + secondsFormat(t1.toFixed(0)) + "</td><td>" + secondsFormat(t2.toFixed(0)) + "</td><td>" + secondsFormat((t1 + t2).toFixed(0)) + "</td><td><button type='button'  onclick='funcion_reporte_modal(\"" + data[i].fecha + "\",\"" + data[i].estado + "\",\"" + data[i].codigo + "\")' data-bs-toggle='modal' data-bs-target='#infoModal' ><img src='/icons/info.svg' alt='info' srcset=''></button></td></tr>");
-					dato = dato + con;
-
+					/*const elementos = data.sort();
+					let valores = [];
+					let cont = 1;
+					for (let i = 0; i < elementos.length; i++) {
+						//Calculo de repetidos
+						if (elementos[i + 1].s_nombre_usuario === elementos[i].s_nombre_usuario) {
+							cont++;
+						} else {
+							valores.push({ type: elementos[i].s_nombre_usuario, earnings: cont });
+							cont = 1;
+						}
+					}*/
+					let div = document.getElementById("dataReport");
+					div.innerHTML = dato;
+					//consulta
+					funcion_reporte_usuario();
+					funcion_reporte_ventanilla();
+					funcion_reporte_promedio();
+				} else {
+					tabla.style.display = "none";
+					boton.style.display = "none";
+					submitResult();
 				}
-				/*const elementos = data.sort();
-				let valores = [];
-				let cont = 1;
-				for (let i = 0; i < elementos.length; i++) {
-					//Calculo de repetidos
-					if (elementos[i + 1].s_nombre_usuario === elementos[i].s_nombre_usuario) {
-						cont++;
-					} else {
-						valores.push({ type: elementos[i].s_nombre_usuario, earnings: cont });
-						cont = 1;
-					}
-				}*/
-				let div = document.getElementById("dataReport");
-				div.innerHTML = dato;
-				//consulta
-				funcion_reporte_usuario();
-				funcion_reporte_ventanilla();
-				funcion_reporte_promedio();
-			} else {
-				tabla.style.display = "none";
 			}
-		}
+		});
+	}
+}
+
+//Alerta
+function submitResult() {
+	Swal.fire({
+		title: 'Mensaje',
+		timer: 3000,                       // Establece el tiempo de duracion
+		html: '<b> No hay atenciones según el filtro. </b>',
+		showConfirmButton: false
+
+	}).then(function() {
 	});
 }
 
@@ -92,6 +150,7 @@ function funcion_reporte_modal(fecha, ausente, codigo) {
 		url: "/api/reporte/modal",
 		success: function(data) {
 			var tabla = document.getElementById("tablaModal");
+
 			if (data.length != 0) {
 				tabla.style.display = "block";
 				var dato = "";

@@ -1,4 +1,20 @@
+// Bandera activar mensaje
+var ban = false;
+
+//Alerta
+function submitResult() {
+	Swal.fire({
+		title: 'Mensaje',
+		timer: 2000,                       // Establece el tiempo de duracion
+		html: '<b> No hay atenciones vuelva a intentarlo. </b>',
+		showConfirmButton: false
+
+	}).then(function() {
+	});
+}
+
 function funcion_atender() {
+	this.ban = false;
 	$.ajax({
 
 		url: "/inicio/atender/" + $("#codigo").val(),
@@ -10,6 +26,7 @@ function funcion_atender() {
 }
 
 function funcion_atender_fin() {
+	this.ban = false;
 	$.ajax({
 
 		url: "/inicio/atender/fin/" + $("#codigo").val(),
@@ -21,6 +38,7 @@ function funcion_atender_fin() {
 }
 
 function funcion_otorgarAtencion(idVentanilla) {
+	this.ban = true;
 	$.ajax({
 
 		url: "/inicio/otorgarAtencion/" + idVentanilla + "/" + localStorage.getItem("sede"),
@@ -50,6 +68,7 @@ function funcion_ValidarEspecialidad() {
 	}
 }
 function funcion_ayudar(idVentanilla) {
+	this.ban = true;
 	var bandera = funcion_ValidarEspecialidad();
 	if (bandera) {
 		return;
@@ -122,6 +141,7 @@ function showGreeting(message) {
 	var btnAyu = document.getElementById("llamarAyuda");
 	var btnFin = document.getElementById("fin");
 	var btnSig = document.getElementById("siguiente");
+
 	if (message.length >= 1) {
 		// Desactivar llamar atencion
 		btnLla.style.display = "none";
@@ -150,6 +170,11 @@ function showGreeting(message) {
 		}
 
 	} else {
+		// Llamar mensaje de alerta cuando no hay atencion
+		if (this.ban == true) {
+			submitResult();
+			this.ban = false;
+		}
 		// Activar llamar atencion
 		btnLla.style.display = "block";
 		btnAyu.style.display = "block";
